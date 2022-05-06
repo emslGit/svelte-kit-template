@@ -6,7 +6,7 @@
 
 <Header />
 
-<h1>Heading</h1>
+<h1>Bored?</h1>
 
 <main>
 	<slot />

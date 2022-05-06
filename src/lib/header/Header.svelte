@@ -1,6 +1,4 @@
-<header class="layout-center">
-	<h2>NAV</h2>
-</header>
+<header class="layout-center" />
 
 <style>
 	header {

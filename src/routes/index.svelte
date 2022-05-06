@@ -3,24 +3,41 @@
 </script>
 
 <script lang="ts">
+	let whatToDo: string;
+	let state: string = "loaded";
+
+	function fetchData(): void {
+		state = "loading";
+		fetch("https://www.boredapi.com/api/activity")
+			.then((response) => response.json())
+			.then((data) => (whatToDo = data.activity))
+			.catch((e) => console.log(e))
+			.finally(() => (state = "loaded"));
+	}
 </script>
 
 <svelte:head>
-	<title>Home</title>
+	<title>Bored?</title>
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<section>
-	<h1>Main</h1>
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia alias labore,
-		sunt animi eveniet perferendis a culpa error dolore architecto quos dolorum
-		quo blanditiis provident dolores consequuntur veritatis mollitia velit!
-	</p>
+<section class="layout-center">
+	{#if state == "loading"}
+		<h1>Loading...</h1>
+	{:else}
+		<h1>{whatToDo || "Press this button if you're bored"}.</h1>
+		<button on:click={() => fetchData()}>Press</button>
+	{/if}
 </section>
 
 <style>
 	section {
+		flex-direction: column;
+		flex: 1;
 		padding: 2em;
+	}
+
+	button {
+		padding: 0.5em 1em;
 	}
 </style>

@@ -1,4 +1,4 @@
-<footer class="layout-center">FOOTER</footer>
+<footer class="layout-center">All rights reserved 2022.</footer>
 
 <style>
 	footer {
