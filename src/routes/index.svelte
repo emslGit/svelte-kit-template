@@ -3,30 +3,35 @@
 </script>
 
 <script lang="ts">
-	let whatToDo: string;
-	let state: string = "loaded";
+	import { status, Status } from "../app.store";
+	import { fetchData } from "../api/dummyApi";
+	let data: Object | null;
 
-	function fetchData(): void {
-		state = "loading";
-		fetch("https://www.boredapi.com/api/activity")
-			.then((response) => response.json())
-			.then((data) => (whatToDo = data.activity))
-			.catch((e) => console.log(e))
-			.finally(() => (state = "loaded"));
+	async function handleClick(): Promise<void> {
+		await fetchData().then((_data: Object | null) => {
+			data = _data;
+		});
 	}
 </script>
 
 <svelte:head>
-	<title>Bored?</title>
+	<title>Title</title>
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
 <section class="layout-center">
-	{#if state == "loading"}
-		<h1>Loading...</h1>
+	{#if $status == Status.INITIAL}
+		<h2>Content.</h2>
+	{:else if $status == Status.LOADING}
+		<h2 class="loading">Loading...</h2>
+	{:else if $status == Status.SUCCESS}
+		<h2>{data || "No data found"}.</h2>
 	{:else}
-		<h1>{whatToDo || "Press this button if you're bored"}.</h1>
-		<button on:click={() => fetchData()}>Press</button>
+		<h2 class="failed">Something went wrong.</h2>
+	{/if}
+
+	{#if $status == Status.INITIAL || $status == Status.SUCCESS}
+		<button on:click={() => handleClick()}>Press</button>
 	{/if}
 </section>
 

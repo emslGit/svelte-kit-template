@@ -6,9 +6,9 @@
 
 <Header />
 
-<h1>Bored?</h1>
+<h1>Header</h1>
 
-<main>
+<main class="layout-center">
 	<slot />
 </main>
 
@@ -23,12 +23,23 @@
 		background-color: white;
 	}
 
+	h1 {
+		padding: 1em;
+	}
+
 	:global .layout-center {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
 
-	@media (min-width: 480px) {
+	:global .layout-row {
+		display: flex;
+		flex-direction: row;
+	}
+
+	:global .layout-column {
+		display: flex;
+		flex-direction: column;
 	}
 </style>
